@@ -1,4 +1,12 @@
 [deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+Compose = "a81c6b42-2e10-5240-aca2-a61377ecd94b"
+Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
+GraphPlot = "a2cc645c-3eea-5389-862e-a155d0052231"
+LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 NetworkDynamics = "22e9dc34-2a0d-11e9-0de0-8588d035468b"
 OrderedCollections = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
+OrdinaryDiffEq = "1dea7af3-3e70-54e6-95c3-0bf5283fa5ed"
 PowerDynamics = "cc46b21f-1b17-51c2-b642-af74c3d3a8be"
+ProbabilisticStability = "bb2e40dd-33ce-4caf-9db6-78280bfd9b11"
+QuasiMonteCarlo = "8a4e6c94-4038-4cdc-81c3-7e6ffdb2a71b"
