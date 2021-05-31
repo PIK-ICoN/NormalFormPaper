@@ -1,4 +1,4 @@
-using PowerDynamics 
+using PowerDynamics
 using OrderedCollections
 
 const PLOT_TIMESERIES = false
@@ -41,7 +41,7 @@ branches=OrderedDict(
     "branch19"=> StaticLine(from= "bus12", to = "bus13",Y=2.4890245868219187-1im*2.251974626172212),
     "branch20"=> StaticLine(from= "bus13", to = "bus14",Y=1.1369941578063267-1im*2.314963475105352));
 
-# Schiffer models 
+# Schiffer models
 τ_P=1
 τ_Q=1
 K_P=1
@@ -228,6 +228,7 @@ using OrdinaryDiffEq
 using QuasiMonteCarlo
 using CSV
 using Distances
+using DataFrames
 
 #
 
@@ -248,8 +249,8 @@ function pg_dist_approx(x, y; d = Euclidean())
     sy = State(pg_approx, y)
     return d([sx[:, :v]; sx[ωidx, :ω]], [sy[:, :v]; sy[ωidx, :ω]])
 end
- 
-mapping = Dict(:ω => L"$\omega \;[rad/s]$", :v => L"$\rho \;[p.u.]$", :φ => L"$\phi \;[rad]$")
+
+mapping = Dict(:ω => L"$\omega \;[s^{-1}]$", :v => L"$\rho \;[pu]$", :φ => L"$\phi$")
 
 function plotbasin(x, y, path, orig, approx, op_orig, xrange, yrange, model, node, vars, dimensions, perturbations)
     @assert size(orig, 1) == size(approx, 1)
@@ -257,19 +258,20 @@ function plotbasin(x, y, path, orig, approx, op_orig, xrange, yrange, model, nod
     z1 = map(x->x ? 1 : 0, orig.within_threshold .& (orig.retcode .!== "Unstable"))
     z2 = map(x->x ? 2 : 0, approx.within_threshold .& (approx.retcode .!== "Unstable"))
     heatmap(
-            xrange, 
-            yrange, 
-            reshape(z1 .+ z2, Int(sqrt(sample_size)), :), 
-            levels=4, 
-            colorbar=false, 
+            xrange,
+            yrange,
+            reshape(z1 .+ z2, Int(sqrt(sample_size)), :),
+            levels=4,
+            colorbar=false,
             grid=false,
             c=[:white, :yellow, :red, :orange],
-            label=false, 
+            label=false,
             legend=false,
             xlims = extrema(xrange),
             ylims = extrema(yrange),
-            xguide=x, 
-            yguide=y, 
+            xguide=x,
+            yguide=y,
+            size=(850, 800),
             tickfont=(14, "times"),
             guidefont=(16, "times"),
             legendfont=(14, "times"),
@@ -317,12 +319,12 @@ function calc(OVERWRITE, model, node, vars, dimensions, perturbations)
             solver = Rodas5(),
             verbose = true,
             return_df = true,
-            ) 
+            )
 
         CSV.write(plot_path * "$(model)_basin_orig.csv", results_orig_freq_i)
     end
 
-    results_orig_freq_i = CSV.read(plot_path * "$(model)_basin_orig.csv")
+    results_orig_freq_i = CSV.read(plot_path * "$(model)_basin_orig.csv", DataFrame)
 
     ##
 
@@ -361,19 +363,19 @@ function calc(OVERWRITE, model, node, vars, dimensions, perturbations)
             solver = Rodas5(),
             verbose = true,
             return_df = true,
-            ) 
+            )
 
         CSV.write(plot_path * "$(model)_basin_approx.csv", results_approx_freq_i)
     end
 
-    results_approx_freq_i = CSV.read(plot_path * "$(model)_basin_approx.csv")
+    results_approx_freq_i = CSV.read(plot_path * "$(model)_basin_approx.csv", DataFrame)
 
     ##
 
     plotbasin(
-        mapping[first(vars)], mapping[last(vars)], 
-        plot_path * "$(model)_basin.png", 
-        results_orig_freq_i, results_approx_freq_i, op_orig, xrange, yrange, 
+        mapping[first(vars)], mapping[last(vars)],
+        plot_path * "$(model)_basin.png",
+        results_orig_freq_i, results_approx_freq_i, op_orig, xrange, yrange,
         model, node, vars, dimensions, perturbations
         )
 end
@@ -383,27 +385,27 @@ println("finished function defs")
 ##
 
 dim = map(dimension, values(pg_orig.nodes))
-last_idx =   dim |> cumsum 
+last_idx =   dim |> cumsum
 first_idx = 1 .+ last_idx .- dim;
 @show zip.(first_idx, last_idx)[13];
 
 ##
 setups = [
-    ("bus1", [:φ, :v], 1:2, (π, 0.8)), 
-    ("bus4", [:φ, :ω], 9:11, (π, 10)), 
-    ("bus9", [:φ, :v], 23:24, (π, 0.8)), 
-    ("bus6", [:v, :ω], 15:17, (0.8, 10)), 
-    ("bus8", [:φ, :ω], 20:22, (π, 10)), 
+    ("bus1", [:φ, :v], 1:2, (π, 0.8)),
+    ("bus4", [:φ, :ω], 9:11, (π, 10)),
+    ("bus9", [:φ, :v], 23:24, (π, 0.8)),
+    ("bus6", [:v, :ω], 15:17, (0.8, 10)),
+    ("bus8", [:φ, :ω], 20:22, (π, 10)),
     ("bus12", [:φ, :v], 32:33, (π, 0.8)),
     ("bus13", [:φ, :v], 35:36, (π, 0.8))
 ]
 
-sample_size = 10_000
+sample_size = 10000 # square number!!
 #vars = [:φ, :v]
 #dimensions = 26:27 #map(dimension, values(pg_orig.nodes)) |> cumsum
 #perturbations = (π, 0.8) # (π, 10) # (π, 0.8)
 OVERWRITE = false
-#node = "bus10" 
+#node = "bus10"
 
 if BASIN_PLOT
     for setup in setups
