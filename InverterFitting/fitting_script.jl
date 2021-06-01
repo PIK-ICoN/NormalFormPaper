@@ -5,7 +5,7 @@ using OrdinaryDiffEq
 using Plots
 using Flux, DiffEqFlux
 
-include("Helper_functions.jl")
+include("function_definitions.jl")
 
 ##
 
@@ -121,6 +121,7 @@ res = DiffEqFlux.sciml_train(loss, par,
                                     maxiters = 100)
 
 par = res.minimizer
+savefig("modelfit1.png")
                                 
 ##
 
@@ -138,5 +139,6 @@ u0 = par[1:3]; u0 = [meas.ur[1] meas.ui[1] 0]
 prob = ODEProblem((du,u,p,t) -> dynamic_model(du,u,ir_fun,ii_fun,p,t),u0,tspan,par[4:18])
 sol = solve(prob, Tsit5(),saveat=tsteps)
 plot_sim(meas,sol)
+savefig("modelfit2.png")
 
 ##

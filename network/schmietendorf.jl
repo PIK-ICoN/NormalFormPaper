@@ -102,14 +102,14 @@ vline!(pω, [pp.tspan_fault...], c=:black, alpha=0.8);
 l = @layout [a{0.32h}; b{0.32h}; c{0.32h}]
 plot(pv, pφ, pω;
     layout=l,
-    size=(800, 750),
+    size=(650, 600),
     grid=:y, gridalpha=0.5,
     link=:x,
     tickfont=(20, "times"),
     guidefont=(24, "times"),
     legendfont=(16, "times"),
     linewidth=4,
-    )
+    ) |> display
 
 savefig(plot_path * "schmietendorf_traj.png")
 

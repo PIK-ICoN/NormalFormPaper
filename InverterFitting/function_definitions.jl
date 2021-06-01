@@ -23,11 +23,12 @@ function plot_sim(meas,sol)
     t = meas.t
     ρm = sqrt.(data[1,:].^2 + data[2,:].^2)
     ρs = sqrt.(sol[1,:].^2 + sol[2,:].^2)
-    plt1 = plot(t,data[1,:]); plot!(plt1,sol,vars=1); ylabel!(plt1,"Re(u)")
-    plt2 = plot(t,data[2,:]); plot!(plt2,sol,vars=2); ylabel!(plt2,"Im(u)")
-    plt3 = plot(t,data[3,:]); plot!(plt3,sol,vars=3); ylabel!(plt3,"ω")
+    plt1 = plot(t,data[1,:]); plot!(plt1,sol,vars=1); ylabel!(plt1,"Re(u)"); xlabel!(plt1,"")
+    plt2 = plot(t,data[2,:]); plot!(plt2,sol,vars=2); ylabel!(plt2,"Im(u)"); xlabel!(plt2,"")
+    plt3 = plot(t,data[3,:]); plot!(plt3,sol,vars=3); ylabel!(plt3,"ω"); xlabel!(plt3,"")
     plt4 = plot(t,ρm); plot!(plt4,t,ρs); xlabel!(plt4,"t [s]"); ylabel!(plt4,"|u|")
-    plot(plt1,plt2,plt3,plt4,layout = (4,1),size=(600,600),legend=false,linewidth=2) |> display  
+    plot(plt1,plt2,plt3,plt4,layout = (4,1),size=(600,600),legend=false,linewidth=2,
+          tickfont=10,guidefont=12) |> display  
 end
 
 function predict(u0,p,meas)

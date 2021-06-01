@@ -24,14 +24,14 @@ function plotbasin(x, y, path, orig, approx, op_orig, xrange, yrange)
             legend=false,
             xlims = extrema(xrange),
             ylims = extrema(yrange),
-            size=(850, 800),
+            size=(600, 600),
             xguide=x,
             yguide=y,
-            tickfont=(20, "times"),
-            guidefont=(20, "times"),
-            legendfont=(16, "times"),
+            tickfont=(24, "times"),
+            guidefont=(24, "times"),
+            legendfont=(24, "times"),
             framestyle=:box)
-    scatter!([op_orig[node, first(vars)], ], [op_orig[node, last(vars)], ], markershape=:cross, markersize=10, c=:black, label="fix point")
+    scatter!([op_orig[node, first(vars)], ], [op_orig[node, last(vars)], ], markershape=:cross, markersize=10, c=:black, label="fix point") |> display
     savefig(path)
 end
 

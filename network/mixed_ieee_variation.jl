@@ -333,15 +333,21 @@ df = DataFrame(c = combined, ca = combined_approx)
 CSV.write("$(plot_path)$(model)_scaling.csv", df)
 
 ##
-CSV.read("$(plot_path)$(model)_scaling.csv", DataFrame)
+df = CSV.read("$(plot_path)$(model)_scaling.csv", DataFrame)
+c = parse.(Measurement{Float64},df.c)
+ca = parse.(Measurement{Float64},df.ca)
+
 min_v = map(x -> stability_interval(x)[1:2], sf_interval)
 
 # simple plot
-p = plot(sf_interval, df.c, c=:black, xguide=L"$f_S$", yguide=L"\mu_1", ylims=(0, 1), label="original system", legend=:bottomleft, right_margin=15Plots.mm)
-plot!(p, sf_interval, df.ca, c=:black, ls=:dash, label="normal form")
+p = plot(sf_interval, c, c=:black, xguide=L"$f_S$", yguide=L"\mu_1", ylims=(0, 1), label="original system", legend=:bottomleft, right_margin=15Plots.mm)
+plot!(p, sf_interval,ca, c=:black, ls=:dash, label="normal form")
 p2 = twinx()
 plot!(p2, sf_interval, first.(min_v), yguide=L"\rho_{min}\;[pu]", ylim=(0,1), c=:red, label=false, guidefontcolor=:red)
 plot!(p2, sf_interval, last.(min_v), c=:red, ls=:dash, label=false)
+plot!(tickfont=12, 
+    guidefont=14, 
+    legendfont=12)
 # plot!(sf_interval, df.f, c=:blue, label="ω")
 # plot!(sf_interval, df.fa, c=:blue, ls=:dash, label=false)
 # plot!(sf_interval, df.a, c=:red, label="ρ")
