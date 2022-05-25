@@ -27,9 +27,10 @@ function plotbasin(x, y, path, orig, approx, op_orig, xrange, yrange)
             size=(600, 600),
             xguide=x,
             yguide=y,
-            tickfont=(24, "times"),
-            guidefont=(24, "times"),
-            legendfont=(24, "times"),
+            fontfamily="Computer Modern",
+            tickfontsize=24,
+            guidefontsize=24,
+            legendfontsize=18,
             framestyle=:box)
     scatter!([op_orig[node, first(vars)], ], [op_orig[node, last(vars)], ], markershape=:cross, markersize=10, c=:black, label="fix point") |> display
     savefig(path)
@@ -91,6 +92,7 @@ raw_ics[2, :] = [[x y] for x in xrange for y in yrange] .|> last
 
 PD_ics = zeros(length(dimensions), sample_size)
 PD_ics[1, :] = raw_ics[2, :] .* cos.(raw_ics[1, :])
+
 PD_ics[2, :] = raw_ics[2, :] .* sin.(raw_ics[1, :])
 base_state = copy(op_approx.vec)
 base_state[dimensions] .= 0.
@@ -122,7 +124,7 @@ results_approx = CSV.read(plot_path * "$(model)_basin_rho_phi_approx.csv", DataF
 # scatter!([op_approx[node, first(vars)], ], [op_approx[node, last(vars)], ], markershape=:star, markersize=10, c=:black, label="fix point")
 
 plotbasin(
-    L"$\phi$", L"$\rho \;[pu]$",
+    L"$\phi$", L"$\rho \;(pu)$",
     plot_path * "$(model)_basin_rho_phi.png",
     results_orig, results_approx, op_orig, xrange, yrange
     )
@@ -222,7 +224,7 @@ results_approx_freq = CSV.read(plot_path * "$(model)_basin_rho_omega_approx.csv"
 # scatter!([op_approx[node, first(vars)], ], [op_approx[node, last(vars)], ], markershape=:star, markersize=10, c=:black, label="fix point")
 
 plotbasin(
-    L"$\omega \;[s^{-1}]$", L"$\rho \;[pu]$",
+    L"$\omega \;(s^{-1})$", L"$\rho \;(pu)$",
     plot_path * "$(model)_basin_rho_omega.png",
     results_orig_freq, results_approx_freq, op_orig, xrange, yrange
     )
@@ -321,7 +323,7 @@ results_approx_freq_i = CSV.read(plot_path * "$(model)_basin_omega_phi_approx.cs
 # scatter!([op_approx[node, first(vars)], ], [op_approx[node, last(vars)], ], markershape=:star, markersize=10, c=:black, label="fix point")
 
 plotbasin(
-    L"$\phi$", L"$\omega \;[s^{-1}]$",
+    L"$\phi$", L"$\omega \;(s^{-1})$",
     plot_path * "$(model)_basin_omega_phi.png",
     results_orig_freq_i, results_approx_freq_i, op_orig, xrange, yrange
     )

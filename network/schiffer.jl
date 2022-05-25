@@ -87,15 +87,15 @@ savefig(plot_path * "schiffer_traj_ru_iu.png")
 ##
 symmod(x) = mod2pi(x + π) -π
 
-pv = plot(tarray, t -> sol_orig.(t, 1, :v), legend=:bottomright, label="original model", ylabel=L"\rho \;[pu]", yshowaxis=true, xticks=false, yticks=[0.98, 1., 1.02]);
+pv = plot(tarray, t -> sol_orig.(t, 1, :v), legend=:bottomright, label="original model", ylabel=L"\rho \;(pu)", yshowaxis=true, xticks=false, yticks=[0.98, 1., 1.02]);
 plot!(pv, tarray, t -> sol_approx.(t, 1, :v), label="normal form", linestyle=:dash);
 vline!(pv, [pp.tspan_fault...], c=:black, alpha=0.8, label="");
 
-pφ = plot(tarray, t -> sol_orig.(t, 1, :φ) .|> symmod, legend=false, ylabel=L"\phi \;[rad]", yshowaxis=true, xticks=false);
+pφ = plot(tarray, t -> sol_orig.(t, 1, :φ) .|> symmod, legend=false, ylabel=L"\phi \;(rad)", yshowaxis=true, xticks=false);
 plot!(pφ, tarray, t -> sol_approx.(t, 1, :φ) .|> symmod, linestyle=:dash);
 vline!(pφ, [pp.tspan_fault...], c=:black, alpha=0.8);
 
-pω = plot(tarray, t -> sol_orig.(t, 1, :ω), legend=false, xlabel=L"t \;[s]", ylabel=L"\omega\; [rad/s]", yticks=[-0.5, 0., 0.5]);
+pω = plot(tarray, t -> sol_orig.(t, 1, :ω), legend=false, xlabel=L"t \;(s)", ylabel=L"\omega\; (rad/s)", yticks=[-0.5, 0., 0.5]);
 plot!(pω, tarray, t -> sol_approx.(t, 1, :ω), linestyle=:dash);
 vline!(pω, [pp.tspan_fault...], c=:black, alpha=0.8);
 
@@ -103,12 +103,13 @@ l = @layout [a{0.32h}; b{0.32h}; c{0.32h}]
 
 plot(pv, pφ, pω;
     layout=l,
-    size=(650, 600),
+    size=(600, 600),
     grid=:y, gridalpha=0.5,
     link=:x,
-    tickfont=(20, "times"),
-    guidefont=(24, "times"),
-    legendfont=(16, "times"),
+    fontfamily="Computer Modern",
+    tickfontsize=24,
+    guidefontsize=24,
+    legendfontsize=18,
     linewidth=4,
     )
 
