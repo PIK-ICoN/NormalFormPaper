@@ -87,15 +87,15 @@ plot!(sol_approx.(tarray, 1, :φ), sol_approx.(tarray, 1, :ω), sol_approx.(tarr
 ##
 symmod(x) = mod2pi(x + π) -π
 
-pv = plot(tarray, t -> sol_orig.(t, 1, :v), legend=:bottomright, label="original model", ylabel=L"\rho \;[pu]", yshowaxis=true, xticks=false);#, yticks=[0.98, 1., 1.02]);
+pv = plot(tarray, t -> sol_orig.(t, 1, :v), legend=:bottomright, label="original model", ylabel=L"\rho \;(pu)", yshowaxis=true, xticks=false);#, yticks=[0.98, 1., 1.02]);
 plot!(pv, tarray, t -> sol_approx.(t, 1, :v), label="normal form", linestyle=:dash);
 vline!(pv, [pp.tspan_fault...], c=:black, alpha=0.8, label="");
 
-pφ = plot(tarray, t -> sol_orig.(t, 1, :φ) .|> symmod, legend=false, ylabel=L"\phi \;[rad]", yshowaxis=true, xticks=false, yticks=[0.6, 1., 1.4]);
+pφ = plot(tarray, t -> sol_orig.(t, 1, :φ) .|> symmod, legend=false, ylabel=L"\phi \;(rad)", yshowaxis=true, xticks=false, yticks=[0.6, 1., 1.4]);
 plot!(pφ, tarray, t -> sol_approx.(t, 1, :φ) .|> symmod, linestyle=:dash);
 vline!(pφ, [pp.tspan_fault...], c=:black, alpha=0.8);
 
-pω = plot(tarray, t -> sol_orig.(t, 1, :ω), legend=false, xlabel=L"t \;[s]", ylabel=L"\omega\; [rad/s]", yticks=[-0.4, 0., 0.4]);
+pω = plot(tarray, t -> sol_orig.(t, 1, :ω), legend=false, xlabel=L"t \;(s)", ylabel=L"\omega\; (rad/s)", yticks=[-0.4, 0., 0.4]);
 plot!(pω, tarray, t -> sol_approx.(t, 1, :ω), linestyle=:dash);
 vline!(pω, [pp.tspan_fault...], c=:black, alpha=0.8);
 

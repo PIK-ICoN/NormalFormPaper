@@ -250,7 +250,7 @@ function pg_dist_approx(x, y; d = Euclidean())
     return d([sx[:, :v]; sx[ωidx, :ω]], [sy[:, :v]; sy[ωidx, :ω]])
 end
 
-mapping = Dict(:ω => L"$\omega \;[s^{-1}]$", :v => L"$\rho \;[pu]$", :φ => L"$\phi$")
+mapping = Dict(:ω => L"$\omega \;(rad/s)$", :v => L"$\rho \;(pu)$", :φ => L"$\phi \;(rad)$")
 
 function plotbasin(x, y, path, orig, approx, op_orig, xrange, yrange, model, node, vars, dimensions, perturbations)
     @assert size(orig, 1) == size(approx, 1)

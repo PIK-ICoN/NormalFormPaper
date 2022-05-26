@@ -124,7 +124,7 @@ results_approx = CSV.read(plot_path * "$(model)_basin_rho_phi_approx.csv", DataF
 # scatter!([op_approx[node, first(vars)], ], [op_approx[node, last(vars)], ], markershape=:star, markersize=10, c=:black, label="fix point")
 
 plotbasin(
-    L"$\phi$", L"$\rho \;(pu)$",
+    L"$\phi \;(rad)$", L"$\rho \;(pu)$",
     plot_path * "$(model)_basin_rho_phi.png",
     results_orig, results_approx, op_orig, xrange, yrange
     )
@@ -224,7 +224,7 @@ results_approx_freq = CSV.read(plot_path * "$(model)_basin_rho_omega_approx.csv"
 # scatter!([op_approx[node, first(vars)], ], [op_approx[node, last(vars)], ], markershape=:star, markersize=10, c=:black, label="fix point")
 
 plotbasin(
-    L"$\omega \;(s^{-1})$", L"$\rho \;(pu)$",
+    L"$\omega \;(rad/s)$", L"$\rho \;(pu)$",
     plot_path * "$(model)_basin_rho_omega.png",
     results_orig_freq, results_approx_freq, op_orig, xrange, yrange
     )
@@ -323,7 +323,7 @@ results_approx_freq_i = CSV.read(plot_path * "$(model)_basin_omega_phi_approx.cs
 # scatter!([op_approx[node, first(vars)], ], [op_approx[node, last(vars)], ], markershape=:star, markersize=10, c=:black, label="fix point")
 
 plotbasin(
-    L"$\phi$", L"$\omega \;(s^{-1})$",
+    L"$\phi \;(rad)$", L"$\omega \;(rad/s)$",
     plot_path * "$(model)_basin_omega_phi.png",
     results_orig_freq_i, results_approx_freq_i, op_orig, xrange, yrange
     )
