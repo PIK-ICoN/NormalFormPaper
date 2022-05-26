@@ -271,10 +271,10 @@ function plotbasin(x, y, path, orig, approx, op_orig, xrange, yrange, model, nod
             ylims = extrema(yrange),
             xguide=x,
             yguide=y,
-            size=(850, 800),
-            tickfont=(14, "times"),
-            guidefont=(16, "times"),
-            legendfont=(14, "times"),
+            size=(600, 600),
+            tickfont=(24, "times"),
+            guidefont=(26, "times"),
+            legendfont=(18, "times"),
             framestyle=:box)
     scatter!([op_orig[node, first(vars)], ], [op_orig[node, last(vars)], ], markershape=:cross, markersize=10, c=:black, label="fix point")
     savefig(path)
@@ -400,7 +400,7 @@ setups = [
     ("bus13", [:φ, :v], 35:36, (π, 0.8))
 ]
 
-sample_size = 10000 # square number!!
+sample_size = 16900 # square number!!
 #vars = [:φ, :v]
 #dimensions = 26:27 #map(dimension, values(pg_orig.nodes)) |> cumsum
 #perturbations = (π, 0.8) # (π, 10) # (π, 0.8)
