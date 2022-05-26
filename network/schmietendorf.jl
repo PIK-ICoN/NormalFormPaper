@@ -100,16 +100,18 @@ plot!(pω, tarray, t -> sol_approx.(t, 1, :ω), linestyle=:dash);
 vline!(pω, [pp.tspan_fault...], c=:black, alpha=0.8);
 
 l = @layout [a{0.32h}; b{0.32h}; c{0.32h}]
+
 plot(pv, pφ, pω;
     layout=l,
-    size=(650, 600),
-    grid=:y, gridalpha=0.5,
+    size=(600, 600),
+    grid=:y, gridalpha=0.,
     link=:x,
-    tickfont=(20, "times"),
-    guidefont=(24, "times"),
-    legendfont=(16, "times"),
+    fontfamily="Computer Modern",
+    tickfontsize=24,
+    guidefontsize=24,
+    legendfontsize=18,
     linewidth=4,
-    ) |> display
+)
 
 savefig(plot_path * "schmietendorf_traj.png")
 
@@ -148,7 +150,7 @@ function pg_dist_approx(x, y; d = Euclidean())
     return d([sx[1, :v]; sx[1, :ω]], [sy[1, :v]; sy[1, :ω]])
 end
 
-sample_size = 10000 # square nunber
+sample_size = 40000 # square nunber
 
 model = "schmietendorf"
 

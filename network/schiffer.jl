@@ -104,14 +104,14 @@ l = @layout [a{0.32h}; b{0.32h}; c{0.32h}]
 plot(pv, pφ, pω;
     layout=l,
     size=(600, 600),
-    grid=:y, gridalpha=0.5,
+    grid=:y, gridalpha=0.,
     link=:x,
     fontfamily="Computer Modern",
     tickfontsize=24,
     guidefontsize=24,
     legendfontsize=18,
     linewidth=4,
-    )
+)
 
 savefig(plot_path * "schiffer_traj.png")
 
@@ -155,7 +155,7 @@ function pg_dist_approx(x, y; d = Euclidean())
     return d([sx[1, :v]; sx[1, :ω]], [sy[1, :v]; sy[1, :ω]])
 end
 
-sample_size = 10000 # square number!!
+sample_size = 40000 # square number!!
 
 model = "schiffer"
 
