@@ -1,4 +1,5 @@
 using Interpolations
+using LaTeXStrings
 
 function time_interpolation(i,Δt)
   itp_i = interpolate(i, BSpline(Linear()))
@@ -13,9 +14,19 @@ function plot_io(meas)
   ur = meas.ur
   ui = meas.ui
   ω = meas.omega
-  plt1 = plot(t,ir,label = "Re(i)"); plot!(plt1,t,ii,label = "Im(i)"); ylabel!(plt1,"i [p.u.]"), xlabel!(plt1,"")
-  plt2 = plot(t,ur,label = "Re(u)"); plot!(plt2,t,ui,label = "Im(u)"); ylabel!(plt2,"u [p.u.]"), xlabel!(plt2,"t [s]")
-  plot(plt1,plt2,layout = (2,1),size=(600,300),legend=true,linewidth=2) |> display
+  plt1 = plot(t,ir,label = L"\Re(j)"); plot!(plt1,t,ii,label = L"\Im(j)"); ylabel!(plt1,L"j \;(pu)"), xlabel!(plt1,""); yticks!(plt1,-1.5:1.5:3.)
+  plt2 = plot(t,ur,label = L"\Re(u)"); plot!(plt2,t,ui,label = L"\Im(u)"); ylabel!(plt2,L"u \;(pu)"), xlabel!(plt2,L"t \;(s)")
+  plot(plt1,plt2,
+      layout = (2,1),
+      size=(600,300),
+      legend=true,
+      linewidth=2,
+      fontfamily="Computer Modern",
+      gridalpha=0.,
+      tickfont=14, 
+      guidefont=16, 
+      legendfont=14,
+      bottom_margin=4Plots.mm) |> display
 end
 
 function plot_sim(meas,sol)
@@ -23,12 +34,19 @@ function plot_sim(meas,sol)
     t = meas.t
     ρm = sqrt.(data[1,:].^2 + data[2,:].^2)
     ρs = sqrt.(sol[1,:].^2 + sol[2,:].^2)
-    plt1 = plot(t,data[1,:]); plot!(plt1,sol,vars=1); ylabel!(plt1,"Re(u)"); xlabel!(plt1,"")
-    plt2 = plot(t,data[2,:]); plot!(plt2,sol,vars=2); ylabel!(plt2,"Im(u)"); xlabel!(plt2,"")
-    plt3 = plot(t,data[3,:]); plot!(plt3,sol,vars=3); ylabel!(plt3,"ω"); xlabel!(plt3,"")
-    plt4 = plot(t,ρm); plot!(plt4,t,ρs); xlabel!(plt4,"t [s]"); ylabel!(plt4,"|u|")
-    plot(plt1,plt2,plt3,plt4,layout = (4,1),size=(600,600),legend=false,linewidth=2,
-          tickfont=10,guidefont=12) |> display  
+    plt1 = plot(t,data[1,:]); plot!(plt1,sol,vars=1); ylabel!(plt1,L"Re(u) \;(pu)"); xlabel!(plt1,"")
+    plt2 = plot(t,data[2,:]); plot!(plt2,sol,vars=2); ylabel!(plt2,L"Im(u) \;(pu)"); xlabel!(plt2,"")
+    plt3 = plot(t,data[3,:]); plot!(plt3,sol,vars=3); ylabel!(plt3,L"\omega \;(rad/s)"); xlabel!(plt3,"")
+    plt4 = plot(t,ρm); plot!(plt4,t,ρs); xlabel!(plt4,L"t \;(s)"); ylabel!(plt4,L"|u| \;(pu)"); #yticks!(plt4,0.94:0.02:1.00)
+    plot(plt1,plt2,plt3,plt4,
+        layout = (4,1),
+        size=(600,600),
+        legend=false,
+        linewidth=2,
+        tickfont=14,
+        guidefont=16,
+        fontfamily="Computer Modern",
+        gridalpha=0.) |> display  
 end
 
 function predict(u0,p,meas)
