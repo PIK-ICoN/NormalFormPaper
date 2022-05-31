@@ -80,6 +80,6 @@ Colorbar(fig[2, 1:3],
         flipaxis = false,
         width = 800,
         size = 20,
-        label=L"\frac{du}{dt} \; \left(\frac{pu}{s}\right)")
+        label=L"\left|\frac{du}{dt}\right| \; \left(\frac{pu}{s}\right)")
 
 save(plot_path * "streamplot.png",fig)
